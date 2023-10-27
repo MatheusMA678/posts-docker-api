@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const cors_1 = __importDefault(require("cors"));
+const users_1 = require("./routes/users");
+const posts_1 = require("./routes/posts");
+const jwt_1 = require("./middlewares/jwt");
+const port = process.env.PORT || 3333;
+const app = (0, express_1.default)();
+app.use(express_1.default.json());
+app.use((0, cors_1.default)());
+app.post("/login", users_1.login);
+app.get("/posts", posts_1.listPosts);
+app.post("/posts", jwt_1.JWTValidation, posts_1.createPost);
+app.get("/users", users_1.listUsers);
+app.post("/users", users_1.createUser);
+app.listen(port, () => console.log(`[server] running at http://localhost:${port}`));

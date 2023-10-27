@@ -1,0 +1,16 @@
+services:      
+  server:
+    stdin_open: true
+    container_name: posts-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - ./.env
+    environment:
+      DATABASE_URL: $DATABASE_URL
+      PORT: $PORT
+      JWT_SECRET: $JWT_SECRET
+    ports:
+      - $PORT:$PORT
+    restart: always
